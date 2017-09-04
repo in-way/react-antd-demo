@@ -29,6 +29,7 @@ import myChart from './components/chart.js'
 import myAnimate from './components/animate.js'
 import myCalendar from './components/calendar.js'
 import myCard from './components/fetch.js'
+// import SearchPage from './components/searchPage/index.js'
 
 const ACTIVE = { color: 'red' }
 
@@ -54,7 +55,7 @@ class Sider extends React.Component {
 
     getUser = () => {
         this.setState({
-            username: 'luozh'
+            username: 'xl'
         })
     }
 
@@ -62,7 +63,7 @@ class Sider extends React.Component {
         return (
             <div>
                 <div id="leftMenu"> 
-                    <img src='src/assets/images/logo.png' width="50" id="logo"/>
+                    {/*<img src='src/assets/images/logo.png' width="50" id="logo"/>*/}
                     <Menu theme="dark"
                         onClick={this.handleClick}
                         style={{ width: 185 }}
@@ -75,10 +76,11 @@ class Sider extends React.Component {
                             <Menu.Item key="2"><Link to="/myForm">表单</Link></Menu.Item>
                             <Menu.Item key="3"><Link to="/myChart">图表</Link></Menu.Item>
                             <Menu.Item key="4"><Link to="/myCalendar">日历</Link></Menu.Item>
+                            {/*<Menu.Item key="7"><Link to="/SearchPage">我的</Link></Menu.Item>*/}
                         </SubMenu>
                         <SubMenu key="sub2" title={<span><Icon type="appstore" /><span>导航二</span></span>}>
                             <Menu.Item key="5"><Link to="/myCard">导航</Link></Menu.Item>
-                            <Menu.Item key="6"><Link to="/myAnimate">关注</Link></Menu.Item>
+                            {/*<Menu.Item key="6"><Link to="/myAnimate">关注</Link></Menu.Item>*/}
                         </SubMenu>
                     </Menu>
                 </div>
@@ -109,6 +111,7 @@ render((
             <Route path="myCalendar" component={myCalendar} />
             <Route path="myAnimate" component={myAnimate} />
             <Route path="myCard" component={myCard} />
+            {/*<Route path="SearchPage" component={SearchPage} />*/}
         </Route>
     </Router>
 ), document.getElementById('app'));

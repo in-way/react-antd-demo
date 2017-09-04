@@ -1,6 +1,6 @@
 import React from 'react'
 import { Form, Input, Select, Checkbox, DatePicker, Col, Radio, Button, Modal, message } from 'antd'
-
+import $ from 'jquery'
 const FormItem = Form.Item
 const Option = Select.Option
 const RadioGroup = Radio.Group
@@ -22,7 +22,20 @@ class myForm extends React.Component {
     handleSubmit = (e) => {
         e.preventDefault()
         console.log('收到表单值：', this.props.form.getFieldsValue())
-
+        const data = this.props.form.getFieldsValue();
+        $.ajax({
+            url:'http://127.0.0.1:8091/air-jygl/test/addTestData.do',
+            dataType : 'json',
+            type : 'post',
+            async:false,
+            data:data,
+            success:function(datas){
+                message.success('添加成功!');
+            },
+            error:function (){
+                message.error('添加失败!');
+            }
+        })
         this.props.form.resetFields()
     }
 
@@ -49,46 +62,42 @@ class myForm extends React.Component {
         const success = function () {
             message.success('操作成功!');
         }
-
+        const error = function () {
+            message.error('添加失败！')
+        }
         return (
             <Form horizontal onSubmit={this.handleSubmit}>
                 <FormItem
                     id="control-input"
-                    label="输入框"
+                    label="姓名"
                     {...formItemLayout}
                     required>
                     <Input id="control-input" placeholder="Please enter..."
-                    {...getFieldProps('userName')} />
+                    {...getFieldProps('username')} />
                 </FormItem>
 
                 <FormItem
-                    label="日期选择框"
+                    label="生日"
                     labelCol={{ span: 3 }}
                     required>
                     <Col span="2">
                         <FormItem>
-                            <DatePicker {...getFieldProps('startDate')} />
+                            <DatePicker {...getFieldProps('birthday')} />
                         </FormItem>
                     </Col>
-                    <Col span="1">
+                    {/*<Col span="1">
                         <p className="ant-form-split">-</p>
                     </Col>
                     <Col span="2">
                         <FormItem>
                             <DatePicker {...getFieldProps('endDate')} />
                         </FormItem>
-                    </Col>
+                    </Col>*/}
                 </FormItem>
 
-                <FormItem
-                    id="control-textarea"
-                    label="文本域"
-                    {...formItemLayout}>
-                    <Input type="textarea" id="control-textarea" rows="3" 
-                    {...getFieldProps('content')} />
-                </FormItem>
 
-                <FormItem
+
+             {/*   <FormItem
                     id="select"
                     label="Select 选择器"
                     {...formItemLayout}>
@@ -99,31 +108,46 @@ class myForm extends React.Component {
                         <Option value="disabled" disabled>disabled</Option>
                         <Option value="yiminghe">yiminghe</Option>
                     </Select>
-                </FormItem>
+                </FormItem>*/}
 
-                <FormItem
+              {/*  <FormItem
                     label="Checkbox 多选框"
                     {...formItemLayout}
                 >
                     <Checkbox className="ant-checkbox-inline" {...getFieldProps('checkboxItem1')}>选项一</Checkbox>
                     <Checkbox className="ant-checkbox-inline" {...getFieldProps('checkboxItem2')}>选项二</Checkbox>
                     <Checkbox className="ant-checkbox-inline" {...getFieldProps('checkboxItem3')}>选项三</Checkbox>
-                </FormItem>
+                </FormItem>*/}
 
                 <FormItem
-                    label="Radio 单选框"
+                    label="性别"
                     {...formItemLayout} >
-                    <RadioGroup defaultValue="b" {...getFieldProps('radioItem')}>
-                        <Radio value="a">A</Radio>
-                        <Radio value="b">B</Radio>
-                        <Radio value="c">C</Radio>
-                        <Radio value="d">D</Radio>
+                    <RadioGroup defaultValue="b" {...getFieldProps('sex')}>
+                        <Radio value="0">男</Radio>
+                        <Radio value="1">女</Radio>
+                     {/*   <Radio value="c">C</Radio>
+                        <Radio value="d">D</Radio>*/}
                     </RadioGroup>
                 </FormItem>
+                <FormItem
+                    id="control-input"
+                    label="电话号码"
+                    {...formItemLayout}
+                    required>
+                    <Input id="control-input" placeholder="Please enter..."
+                           {...getFieldProps('phone')} />
+                </FormItem>
+                <FormItem
+                    id="control-textarea"
+                    label="备注"
+                    {...formItemLayout}>
+                    <Input type="textarea" id="control-textarea" rows="3"
+                           {...getFieldProps('remark')} />
+                </FormItem>
                 <FormItem wrapperCol={{ span: 6, offset: 3 }} style={{ marginTop: 24 }}>
-                    <Button type="primary" htmlType="submit" onClick={success}>确定</Button>
+                    <Button type="primary" htmlType="submit" >确定</Button>
                     &nbsp;&nbsp;&nbsp;
-                    <Button type="ghost" onClick={this.showModal}>点击有惊喜</Button>
+                    <Button type="ghost" onClick={this.showModal}>弹出框</Button>
                 </FormItem>
                 <Modal title="登录" visible={this.state.visible} onOk={this.hideModal} onCancel={this.hideModal}>
                     这是一个modal
