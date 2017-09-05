@@ -30,10 +30,18 @@ class myForm extends React.Component {
             async:false,
             data:data,
             success:function(datas){
-                message.success('添加成功!');
+                // message.success('添加成功!');
+                Modal.success({
+                    title: '提示信息',
+                    content: '添加成功！',
+                });
             },
             error:function (){
-                message.error('添加失败!');
+                // message.error('添加失败!');
+                Modal.error({
+                    title: '提示信息',
+                    content: '添加失败！',
+                });
             }
         })
         this.props.form.resetFields()
@@ -73,7 +81,7 @@ class myForm extends React.Component {
                     {...formItemLayout}
                     required>
                     <Input id="control-input" placeholder="Please enter..."
-                    {...getFieldProps('username')} />
+                    {...getFieldProps('username')} required />
                 </FormItem>
 
                 <FormItem
@@ -82,7 +90,7 @@ class myForm extends React.Component {
                     required>
                     <Col span="2">
                         <FormItem>
-                            <DatePicker {...getFieldProps('birthday')} />
+                            <DatePicker required {...getFieldProps('birthday')} />
                         </FormItem>
                     </Col>
                     {/*<Col span="1">
@@ -122,7 +130,7 @@ class myForm extends React.Component {
                 <FormItem
                     label="性别"
                     {...formItemLayout} >
-                    <RadioGroup defaultValue="b" {...getFieldProps('sex')}>
+                    <RadioGroup  required defaultValue="0" {...getFieldProps('sex')}>
                         <Radio value="0">男</Radio>
                         <Radio value="1">女</Radio>
                      {/*   <Radio value="c">C</Radio>
@@ -135,7 +143,7 @@ class myForm extends React.Component {
                     {...formItemLayout}
                     required>
                     <Input id="control-input" placeholder="Please enter..."
-                           {...getFieldProps('phone')} />
+                           {...getFieldProps('phone')} required />
                 </FormItem>
                 <FormItem
                     id="control-textarea"
@@ -147,7 +155,7 @@ class myForm extends React.Component {
                 <FormItem wrapperCol={{ span: 6, offset: 3 }} style={{ marginTop: 24 }}>
                     <Button type="primary" htmlType="submit" >确定</Button>
                     &nbsp;&nbsp;&nbsp;
-                    <Button type="ghost" onClick={this.showModal}>弹出框</Button>
+                    {/*<Button type="ghost" onClick={this.showModal}>弹出框</Button>*/}
                 </FormItem>
                 <Modal title="登录" visible={this.state.visible} onOk={this.hideModal} onCancel={this.hideModal}>
                     这是一个modal

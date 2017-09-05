@@ -10,7 +10,9 @@ const confirm = Modal.confirm
         this.state = {
             tDate: [],
             selectedRowKeys: [],
-            visible: false
+            visible: false,
+            title:'',
+            content:''
         }
     }
     /*componentWillMount (){
@@ -87,11 +89,72 @@ const confirm = Modal.confirm
      });
  }
      // 显示弹框
-     showModal = () => {
+     showModal  = () => {
          this.setState({ visible: true })
+         this.setState({title:e})
+         this.setState({content:''})
+     }
+    //删除
+     onDelete(index){
+         console.log(index)
+         const dataSource = [...this.state.tDate];
+         dataSource.splice(index, 1);//index为获取的索引，后面的 1 是删除几行
+         this.setState({ dataSource });
      }
 
+    showDeleteConfirm(record,index) {
+     confirm({
+         title: '确认删除?',
+         content: '删除后不能恢复！',
+         okText: '确认',
+         okType: 'danger',
+         cancelText: '取消',
+         onOk() {
+             console.log('OK'+index+record.USERID);
+             $.ajax({
+                 url:'http://127.0.0.1:8091/air-jygl/test/deleteTest.do',
+                 dataType : 'json',
+                 type : 'post',
+                 async:false,
+                 data:{"userid":record.USERID},
+                 success:function(datas){
+                     if(datas=="ok"){
+                         // const dataSource = [...this.state.tDate];
+                         // dataSource.splice(index, 1);//index为获取的索引，后面的 1 是删除几行
+                         // this.setState({ dataSource });
+                         Modal.success({
+                             title: '提示信息',
+                             content: '删除成功！',
+                         });
+                     }else {
+                         Modal.error({
+                             title: '提示信息',
+                             content: '删除失败！',
+                         });
+                     }
 
+                 },
+                 error:function (){
+                     Modal.error({
+                         title: '提示信息',
+                         content: '删除失败,xit！',
+                     });
+                 }
+             });
+         },
+         onCancel() {
+             console.log('Cancel');
+         },
+     });
+ }
+     //展示当前行信息
+     showCurRowMessage  (record) {
+         Modal.info({
+             title: '详细信息',
+             content:"USERID:"+record.USERID + " USERNAME:"+record.USERNAME + " PHONE:" + record.PHONE + " BIRTHDAY:" + record.BIRTHDAY + " REMARK:" + record.REMARK
+         });
+         // alert("USERID:"+record.USERID + " USERNAME:"+record.USERNAME + " PHONE:" + record.PHONE + " BIRTHDAY:" + record.BIRTHDAY + " REMARK:" + record.REMARK);
+     }
      // 隐藏弹框
      hideModal = () => {
          this.setState({ visible: false })
@@ -136,7 +199,14 @@ const confirm = Modal.confirm
             labelCol: { span: 3 },
             wrapperCol: { span: 6 }
         }
-        const columns = [{
+        const columns = [
+            {
+                title: '编号',
+                width: '20%',
+                dataIndex: 'USERID',
+                // className:'display:none'
+            },
+            {
             title: '姓名',
             width: '20%',
             dataIndex: 'USERNAME'
@@ -146,11 +216,11 @@ const confirm = Modal.confirm
             dataIndex: 'PHONE',
         }, {
             title: '生日',
-            width: '20%',
+            width: '10%',
             dataIndex: 'BIRTHDAY'
         }, {
             title: '备注',
-            width: '20%',
+            width: '10%',
             dataIndex: 'REMARK',
 
         }, {
@@ -160,8 +230,8 @@ const confirm = Modal.confirm
                 <span>
 
                     <a href="javascript:void(0)" onClick={this.showModal}>编辑</a>|
-                    <a href="javascript:void(0)" onClick={this.showModal}>查看</a>|
-                    <a href="javascript:void(0)" onClick={this.showConfirm}>删除</a>
+                    <a href="javascript:void(0)"  onClick={()=>{this.showCurRowMessage(record)}}>查看</a>|
+                    <a href="javascript:void(0)" onClick={()=>{this.showDeleteConfirm(record,index)}}>删除</a>
 
                 </span>
             ),
@@ -202,7 +272,7 @@ const confirm = Modal.confirm
                 </FormItem>
                 {/*<Input id="control-input" placeholder="Please enter..."/>*/}
                 <Table rowSelection={rowSelection} columns={columns} dataSource={this.state.tDate} bordered pagination={pagination} />
-                <Modal title="登录" visible={this.state.visible} onOk={this.hideModal} onCancel={this.hideModal}>
+                <Modal title={this.state.title} visible={this.state.visible} onOk={this.hideModal} onCancel={this.hideModal}>
                     这是一个modal
                 </Modal>
             </Form>
