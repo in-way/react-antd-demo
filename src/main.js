@@ -29,7 +29,7 @@ import myChart from './components/chart.js'
 import myAnimate from './components/animate.js'
 import myCalendar from './components/calendar.js'
 import myCard from './components/fetch.js'
-// import SearchPage from './components/searchPage/index.js'
+import SearchPage from './components/searchPage/index.js'
 
 const ACTIVE = { color: 'red' }
 
@@ -55,7 +55,7 @@ class Sider extends React.Component {
 
     getUser = () => {
         this.setState({
-            username: 'xl'
+            username: 'weixl'
         })
     }
 
@@ -71,14 +71,15 @@ class Sider extends React.Component {
                         defaultSelectedKeys={[this.state.current]}
                         mode="inline"
                     >
-                        <SubMenu key="sub1" title={<span><Icon type="mail" /><span>导航一</span></span>}>
-                            <Menu.Item key="1"><Link to="/myTable">表格</Link></Menu.Item>
-                            <Menu.Item key="2"><Link to="/myForm">表单</Link></Menu.Item>
-                            <Menu.Item key="3"><Link to="/myChart">图表</Link></Menu.Item>
-                            <Menu.Item key="4"><Link to="/myCalendar">日历</Link></Menu.Item>
+                        <SubMenu key="sub1" title={<span><Icon type="desktop" /><span>用户管理</span></span>}>
+                            <Menu.Item key="2"><Link to="/myForm">添加用户</Link></Menu.Item>
+                            <Menu.Item key="1"><Link to="/myTable">用户列表</Link></Menu.Item>
+
                             {/*<Menu.Item key="7"><Link to="/SearchPage">我的</Link></Menu.Item>*/}
                         </SubMenu>
-                        <SubMenu key="sub2" title={<span><Icon type="appstore" /><span>导航二</span></span>}>
+                        <SubMenu key="sub2" title={<span><Icon type="appstore" /><span>常用工具</span></span>}>
+                            <Menu.Item key="3"><Link to="/myChart">图表</Link></Menu.Item>
+                            <Menu.Item key="4"><Link to="/myCalendar">日历</Link></Menu.Item>
                             <Menu.Item key="5"><Link to="/myCard">导航</Link></Menu.Item>
                             {/*<Menu.Item key="6"><Link to="/myAnimate">关注</Link></Menu.Item>*/}
                         </SubMenu>
@@ -104,14 +105,14 @@ class Sider extends React.Component {
 render((
     <Router history={hashHistory} >
         <Route path="/" component={Sider}>
-            <IndexRoute path="myCard" component={myCard} />
+            <IndexRoute path="myTable" component={myTable} />
             <Route path="myTable" component={myTable} />
             <Route path="myForm" component={myForm} />
             <Route path="myChart" component={myChart} />
             <Route path="myCalendar" component={myCalendar} />
             <Route path="myAnimate" component={myAnimate} />
             <Route path="myCard" component={myCard} />
-            {/*<Route path="SearchPage" component={SearchPage} />*/}
+            <Route path="SearchPage" component={SearchPage} />
         </Route>
     </Router>
 ), document.getElementById('app'));

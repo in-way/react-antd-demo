@@ -88,7 +88,7 @@ class myForm extends React.Component {
                     label="生日"
                     labelCol={{ span: 3 }}
                     required>
-                    <Col span="2">
+                    <Col span="16">
                         <FormItem>
                             <DatePicker required {...getFieldProps('birthday')} />
                         </FormItem>
@@ -129,8 +129,8 @@ class myForm extends React.Component {
 
                 <FormItem
                     label="性别"
-                    {...formItemLayout} >
-                    <RadioGroup  required defaultValue="0" {...getFieldProps('sex')}>
+                    {...formItemLayout} required >
+                    <RadioGroup   defaultValue="0" {...getFieldProps('sex')}>
                         <Radio value="0">男</Radio>
                         <Radio value="1">女</Radio>
                      {/*   <Radio value="c">C</Radio>
@@ -145,6 +145,13 @@ class myForm extends React.Component {
                     <Input id="control-input" placeholder="Please enter..."
                            {...getFieldProps('phone')} required />
                 </FormItem>
+               {/* <FormItem {...formItemLayout} label="就读学校" hasFeedback>
+                    {getFieldProps('schoolname',{
+                        rules:[{required:true,message:'请输入您的就读学校'}]
+                    })(
+                        <Input placeholder="请输入您的就读学校！"/>
+                    )}
+                </FormItem>*/}
                 <FormItem
                     id="control-textarea"
                     label="备注"
